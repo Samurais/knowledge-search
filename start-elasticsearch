@@ -11,6 +11,7 @@ baseDir=$(cd `dirname "$0"`;pwd)
 # functions
 function main(){
     docker run $* --name elasticsearch \
+    -v "$PWD/esdata":/usr/share/elasticsearch/data \
     -p 9200:9200 \
     -p 9300:9300 elasticsearch:latest
 }
