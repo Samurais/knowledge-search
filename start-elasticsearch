@@ -14,4 +14,6 @@ set -x
 cd $baseDir
 docker run --rm -it --name elasticsearch \
     -p 9200:9200 \
-    -p 9300:9300 elasticsearch:latest
+    -p 9300:9300 \
+    -v "$PWD/esdata":/usr/share/elasticsearch/data \
+    elasticsearch:latest
