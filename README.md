@@ -1,7 +1,5 @@
 # ELK Service
 
-## Configuration
-[Kibana5](https://www.elastic.co/guide/en/kibana/5.0/settings.html)
 
 ## Start
 ```
@@ -50,6 +48,52 @@ Host: YOUR_IP:9200
 
 ## Security
 [How to Secure Elasticsearch and Kibana](https://www.mapr.com/blog/how-secure-elasticsearch-and-kibana)
+
+*  /etc/nginx/sites-available/elk-es.xxx.net.conf
+```
+server {
+    listen 80;
+
+    server_name elk-es.xxx.net;
+    location / {
+        auth_basic           "Protected Elasticsearch";
+        auth_basic_user_file /opt/elk/.espasswd;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:9200;
+        proxy_redirect off;
+  }
+}
+```
+
+*  /etc/nginx/sites-available/elk-kibana.xxx.net.conf
+```
+server {
+    listen 80;
+
+    server_name elk-kibana.xxx.net;
+    location / {
+        auth_basic           "Protected Kibana";
+        auth_basic_user_file /opt/elk/.espasswd;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-NginX-Proxy true;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_pass http://127.0.0.1:5601;
+        proxy_redirect off;
+  }
+}
+```
 
 ## Further Reading
 [Elasticsearch Definitive Guide](./elasticsearch-definitive-guide-en.pdf)
