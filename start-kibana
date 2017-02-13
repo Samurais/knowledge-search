@@ -1,0 +1,18 @@
+#! /bin/bash 
+###########################################
+# Start Kibana Service in Docker
+# Docker Image https://hub.docker.com/r/_/kibana/
+###########################################
+
+# constants
+baseDir=$(cd `dirname "$0"`;pwd)
+# functions
+
+# main 
+[ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
+set -x
+cd $baseDir
+docker run --name kibana \
+    --link elasticsearch:elasticsearch \
+    -p 5601:5601 \
+    -it --rm kibana:latest
