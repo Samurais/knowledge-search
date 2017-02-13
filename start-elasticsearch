@@ -6,12 +6,27 @@
 
 # constants
 baseDir=$(cd `dirname "$0"`;pwd)
+. $baseDir/util.sh
+
 # functions
+function main(){
+    docker run $* --name elasticsearch \
+    -p 9200:9200 \
+    -p 9300:9300 elasticsearch:latest
+}
 
 # main 
 [ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
-set -x
 cd $baseDir
-docker run --rm -it --name elasticsearch \
-    -p 9200:9200 \
-    -p 9300:9300 elasticsearch:latest
+if [ "$#" -eq  "0" ]
+then
+    printUsage
+elif [ "$*" = "-t" ]
+then
+    main -it --rm
+elif [ "$*" = "-d" ]
+then
+    main -d
+else
+    printUsage
+fi

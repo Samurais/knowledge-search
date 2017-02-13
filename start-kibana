@@ -6,13 +6,29 @@
 
 # constants
 baseDir=$(cd `dirname "$0"`;pwd)
+. $baseDir/util.sh
+
 # functions
+
+function main(){
+    docker run --name kibana \
+        --link elasticsearch:elasticsearch \
+        -p 5601:5601 \
+        $* kibana:latest
+}
 
 # main 
 [ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
-set -x
 cd $baseDir
-docker run --name kibana \
-    --link elasticsearch:elasticsearch \
-    -p 5601:5601 \
-    -it --rm kibana:latest
+if [ "$#" -eq  "0" ]
+then
+    printUsage
+elif [ "$*" = "-t" ]
+then
+    main -t -i --rm
+elif [ "$*" = "-d" ]
+then
+    main -d
+else
+    printUsage
+fi

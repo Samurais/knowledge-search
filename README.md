@@ -1,13 +1,16 @@
 # ELK Service
 
+## Configuration
+[Kibana5](https://www.elastic.co/guide/en/kibana/5.0/settings.html)
+
 ## Start
 ```
-./start-elasticsearch
-./start-kibana
+./start-elasticsearch -d
+./start-kibana -d
+open YOUR_IP:5061
 ```
 
 ## Index
-
 ### Create Document
 ```
 PUT /twitter/tweet/3 HTTP/1.1
@@ -44,3 +47,9 @@ Host: YOUR_IP:9200
 [Dealing with Human Language](https://www.elastic.co/guide/en/elasticsearch/guide/current/languages.html#languages)
 
 [Aggregations](https://www.elastic.co/guide/en/elasticsearch/guide/current/aggregations.html)
+
+## Security
+[How to Secure Elasticsearch and Kibana](https://www.mapr.com/blog/how-secure-elasticsearch-and-kibana)
+
+## Further Reading
+[Elasticsearch Definitive Guide](./elasticsearch-definitive-guide-en.pdf)
