@@ -1,7 +1,19 @@
 # ELK Service
+[elasticsearch](https://hub.docker.com/_/elasticsearch/)
+[kibana](https://hub.docker.com/_/kibana/)
+
+## Configuration
+```
+cd elk-service
+cp esconfig/elasticsearch.sample.yml esconfig/elasticsearch.yml
+cp esconfig/log4j2.sample.properties esconfig/log4j2.properties
+```
+
+Update the Configurations.
 
 ## Start
 ```
+cd elk-service
 ./start-elasticsearch -d
 ./start-kibana -d
 open YOUR_IP:5061
@@ -96,6 +108,25 @@ server {
 
 ## Client
 [elasticsearch.js](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html)
+[Importing data into Elasticsearch](https://gist.github.com/Samurais/0da7bcbe0cc5830b118b411596f2c171)
 
 ## Further Reading
 [Elasticsearch Definitive Guide](./elasticsearch-definitive-guide-en.pdf)
+
+## Trouble Shooting
+[Fielddata is disabled on text fields by default](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html)
+```
+PUT /chatbot/_mapping/messageinbound/ HTTP/1.1
+Host: elk-es.snaplingo.net
+Content-Type: application/json
+Authorization: Basic xxxxxxxxxxxxxxx
+
+{
+  "properties": {
+    "fromUserId": { 
+      "type":     "text",
+      "fielddata": true
+    }
+  }
+}
+```
