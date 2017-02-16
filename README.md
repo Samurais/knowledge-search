@@ -7,6 +7,7 @@
 cd elk-service
 cp esconfig/elasticsearch.sample.yml esconfig/elasticsearch.yml
 cp esconfig/log4j2.sample.properties esconfig/log4j2.properties
+mkdir esconfig/scripts
 ```
 
 Update the Configurations.
