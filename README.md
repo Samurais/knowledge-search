@@ -106,7 +106,7 @@ sudo service nginx reload
 [Fielddata is disabled on text fields by default](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html)
 ```
 PUT /chatbot/_mapping/messageinbound/ HTTP/1.1
-Host: elk-es.snaplingo.net
+Host: elk-es.xxx.net
 Content-Type: application/json
 Authorization: Basic xxxxxxxxxxxxxxx
 
@@ -119,3 +119,6 @@ Authorization: Basic xxxxxxxxxxxxxxx
   }
 }
 ```
+
+# LICENSE
+[Apache2.0](./LICENSE)
