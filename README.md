@@ -2,6 +2,8 @@
 [elasticsearch](https://hub.docker.com/_/elasticsearch/)
 [kibana](https://hub.docker.com/_/kibana/)
 
+![](./docs/1.png)
+
 ## Installation
 ```
 docker pull kibana:latest
@@ -66,51 +68,32 @@ Host: YOUR_IP:9200
 ## Security
 [How to Secure Elasticsearch and Kibana](https://www.mapr.com/blog/how-secure-elasticsearch-and-kibana)
 
-*  /etc/nginx/sites-available/elk-es.xxx.net.conf
+### TL;DR
 ```
-server {
-    listen 80;
-
-    server_name elk-es.xxx.net;
-    location / {
-        auth_basic           "Protected Elasticsearch";
-        auth_basic_user_file /opt/elk/.espasswd;
-
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_pass http://127.0.0.1:9200;
-        proxy_redirect off;
-  }
-}
+sudo apt-get install apache2-utils nginx -yy
+sudo mkdir -p /opt/elk/
+sudo htpasswd -c /opt/elk/.espasswd sysadmin
 ```
 
-*  /etc/nginx/sites-available/elk-kibana.xxx.net.conf
-```
-server {
-    listen 80;
+### nginx_ensite
 
-    server_name elk-kibana.xxx.net;
-    location / {
-        auth_basic           "Protected Kibana";
-        auth_basic_user_file /opt/elk/.espasswd;
-
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-NginX-Proxy true;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_pass http://127.0.0.1:5601;
-        proxy_redirect off;
-  }
-}
 ```
+# install nginx_ensite
+cd ~
+git clone https://github.com/Samurais/nginx_ensite.git
+cd nginx_ensite
+make install
+
+# install nginx conf
+cd ~/elk-service
+cp  nginx/es.conf /etc/nginx/sites-available/elk-es.xxx.net.conf
+cp  nginx/kibana.conf /etc/nginx/sites-available/elk-kibana.xxx.net.conf
+# update conf
+nginx_ensite elk-es.xxx.net.conf
+nginx_ensite elk-kibana.xxx.net.conf
+sudo service nginx reload
+```
+
 
 ## Client
 [elasticsearch.js](https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/current/index.html)
