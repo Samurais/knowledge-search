@@ -2,12 +2,17 @@
 [elasticsearch](https://hub.docker.com/_/elasticsearch/)
 [kibana](https://hub.docker.com/_/kibana/)
 
+## Installation
+```
+docker pull kibana:latest
+docker pull elasticsearch:latest
+```
+
 ## Configuration
 ```
 cd elk-service
 cp esconfig/elasticsearch.sample.yml esconfig/elasticsearch.yml
 cp esconfig/log4j2.sample.properties esconfig/log4j2.properties
-mkdir esconfig/scripts
 ```
 
 Update the Configurations.
