@@ -1,0 +1,20 @@
+version: '2'
+services:
+  elasticsearch:
+    image: "elasticsearch:latest"
+    volumes:
+     - $PWD/esdata:/usr/share/elasticsearch/data
+     - $PWD/esconfig:/usr/share/elasticsearch/config
+    # ports:
+    #  - "27017:27017"
+    #  - "27018:27018"
+    environment:
+     - AUTH=no
+  kibana:
+    image: "kibana:latest"
+    ports:
+     - "5601:5601"
+    depends_on:
+     - elasticsearch
+    links:
+     - elasticsearch

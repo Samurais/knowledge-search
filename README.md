@@ -27,6 +27,13 @@ cd elk-service
 open YOUR_IP:5061
 ```
 
+OR 
+
+## Run with docker compose
+```
+docker-compose -up
+```
+
 ## Index
 ### Create Document
 ```
