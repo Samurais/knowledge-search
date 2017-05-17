@@ -1,2 +1,5 @@
 esconfig/elasticsearch.yml
 esconfig/log4j2.properties
+
+/esdata/*
+!/esdata/README.md
