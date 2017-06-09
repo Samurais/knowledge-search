@@ -14,7 +14,7 @@ function main(){
     docker run --name kibana \
         --link elasticsearch:elasticsearch \
         -p 5601:5601 \
-        $* kibana:latest
+        $* kibana:5.4.0
 }
 
 # main 

@@ -1,0 +1,12 @@
+#! /bin/bash 
+###########################################
+# docker run -p 9100:9100 mobz/elasticsearch-head:5
+###########################################
+
+# constants
+baseDir=$(cd `dirname "$0"`;pwd)
+# functions
+
+# main 
+[ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
+docker run -d -p 9100:9100 --name elasticsearch-head mobz/elasticsearch-head:5

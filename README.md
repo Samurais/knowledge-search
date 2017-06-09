@@ -6,8 +6,10 @@
 
 ## Installation
 ```
-docker pull kibana:latest
-docker pull elasticsearch:latest
+docker pull kibana:5.4.0
+docker pull elasticsearch:5.4.0
+docker pull mobz/elasticsearch-head:5
+docker pull neo4j:3.1.4
 ```
 
 ## Configuration
@@ -23,8 +25,11 @@ Update the Configurations.
 ```
 cd elk-service
 ./start-elasticsearch -d
+./start-elasticsearch-head
 ./start-kibana -d
-open YOUR_IP:5061
+open YOUR_IP:5061 # for kibana
+open YOUR_IP:9100 # for elasticsearch head
+open YOUR_IP:9200 # for elasticsearch
 ```
 
 OR 
@@ -71,6 +76,14 @@ Host: YOUR_IP:9200
 [Dealing with Human Language](https://www.elastic.co/guide/en/elasticsearch/guide/current/languages.html#languages)
 
 [Aggregations](https://www.elastic.co/guide/en/elasticsearch/guide/current/aggregations.html)
+
+## Plugins
+### elasticsearch-head
+https://github.com/mobz/elasticsearch-head
+
+### neo4j
+https://neo4j.com/developer/elastic-search/
+https://graphaware.com/neo4j/2016/04/20/graph-aided-search-the-rise-of-personalised-content.html
 
 ## Security
 [How to Secure Elasticsearch and Kibana](https://www.mapr.com/blog/how-secure-elasticsearch-and-kibana)

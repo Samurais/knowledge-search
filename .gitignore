@@ -1,5 +1,17 @@
-esconfig/elasticsearch.yml
-esconfig/log4j2.properties
+# elasticsearch
+es_config/elasticsearch.yml
+es_config/log4j2.properties
 
-/esdata/*
-!/esdata/README.md
+/es_data/*
+!/es_data/README.md
+
+# neo4j
+/neo4j_conf/*
+!/neo4j_conf/neo4j.sample.conf
+
+/neo4j_data/*
+!/neo4j_data/README.md
+
+# others
+*.swp
+*.swo

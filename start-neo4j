@@ -1,0 +1,22 @@
+#! /bin/bash 
+###########################################
+# Start Neo4J service
+###########################################
+
+# constants
+baseDir=$(cd `dirname "$0"`;pwd)
+# functions
+
+# main 
+[ -z "${BASH_SOURCE[0]}" -o "${BASH_SOURCE[0]}" = "$0" ] || return
+cd $baseDir
+docker run \
+    -d \
+    --publish=7474:7474 \
+    --publish=7687:7687 \
+    --link elasticsearch:elasticsearch \
+    --volume="$PWD/neo4j_data":/data \
+    --volume="$PWD/neo4j_plugins":/var/lib/neo4j/plugins \
+    --volume="$PWD/neo4j_conf":/var/lib/neo4j/conf \
+    --name neo4j \
+    neo4j:3.1.4
