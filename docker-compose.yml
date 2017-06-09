@@ -1,19 +1,40 @@
 version: '2'
 services:
   elasticsearch:
-    image: "elasticsearch:latest"
+    image: "elasticsearch:5.4.0"
     volumes:
-     - $PWD/esdata:/usr/share/elasticsearch/data
-     - $PWD/esconfig:/usr/share/elasticsearch/config
-    # ports:
-    #  - "27017:27017"
-    #  - "27018:27018"
-    environment:
-     - AUTH=no
+     - $PWD/es_data:/usr/share/elasticsearch/data
+     - $PWD/es_config:/usr/share/elasticsearch/config
+    ports:
+     - "9200:9200"
+     - "9300:9300"
   kibana:
-    image: "kibana:latest"
+    image: "kibana:5.4.0"
     ports:
      - "5601:5601"
+    depends_on:
+     - elasticsearch
+    links:
+     - elasticsearch
+  neo4j:
+    image: "neo4j:3.1.4"
+    volumes:
+     - $PWD/neo4j_data:/data
+     - $PWD/neo4j_plugins:/var/lib/neo4j/plugins
+     - $PWD/neo4j_conf:/var/lib/neo4j/conf
+    ports:
+     - "7474:7474"
+     - "7687:7687"
+    depends_on:
+     - elasticsearch
+    links:
+     - elasticsearch
+    environment:
+     - NEO4J_AUTH=none
+  elasticsearch-head:
+    image: "mobz/elasticsearch-head:5"
+    ports:
+     - "9100:9100"
     depends_on:
      - elasticsearch
     links:

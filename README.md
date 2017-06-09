@@ -2,7 +2,7 @@
 [elasticsearch](https://hub.docker.com/_/elasticsearch/)
 [kibana](https://hub.docker.com/_/kibana/)
 
-![](./docs/1.png)
+![](https://camo.githubusercontent.com/ae91a5698ad80d3fe8e0eb5a4c6ee7170e088a7d/687474703a2f2f37786b6571692e636f6d312e7a302e676c622e636c6f7564646e2e636f6d2f61692f53637265656e25323053686f74253230323031372d30342d30342532306174253230382e32302e3437253230504d2e706e67)
 
 ## Installation
 ```
@@ -27,6 +27,7 @@ cd elk-service
 ./start-elasticsearch -d
 ./start-elasticsearch-head
 ./start-kibana -d
+./start-neo4j
 open YOUR_IP:5061 # for kibana
 open YOUR_IP:9100 # for elasticsearch head
 open YOUR_IP:9200 # for elasticsearch
@@ -36,8 +37,17 @@ OR
 
 ## Run with docker compose
 ```
-docker-compose -up
+docker-compose -up -d [--force-recreate]
+docker-compose logs -f --tail="all" # logs
 ```
+
+## Test
+Open http://YOUR_IP:7474/browser/
+```
+$ merge(p:Person{name:"hain", createAt:TIMESTAMP()})
+```
+
+Now, check elasticsearch-head(http://YOUR_IP:9100/), add index in kibana.
 
 ## Index
 ### Create Document
@@ -84,6 +94,13 @@ https://github.com/mobz/elasticsearch-head
 ### neo4j
 https://neo4j.com/developer/elastic-search/
 https://graphaware.com/neo4j/2016/04/20/graph-aided-search-the-rise-of-personalised-content.html
+
+
+## Destroy
+```
+docker-compose down
+# flush-all-data.sh // delete all data
+```
 
 ## Security
 [How to Secure Elasticsearch and Kibana](https://www.mapr.com/blog/how-secure-elasticsearch-and-kibana)
@@ -141,4 +158,4 @@ Authorization: Basic xxxxxxxxxxxxxxx
 ```
 
 # LICENSE
-[Apache2.0](./LICENSE)
+All Rights Reserve 2017, Hai Liang Wang.
