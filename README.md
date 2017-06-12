@@ -14,9 +14,8 @@ docker pull neo4j:3.1.4
 
 ## Configuration
 ```
-cd elk-service
-cp esconfig/elasticsearch.sample.yml esconfig/elasticsearch.yml
-cp esconfig/log4j2.sample.properties esconfig/log4j2.properties
+cp es_config/elasticsearch.sample.yml esconfig/elasticsearch.yml
+cp es_config/log4j2.sample.properties esconfig/log4j2.properties
 ```
 
 Update the Configurations.
@@ -37,7 +36,7 @@ OR
 
 ## Run with docker compose
 ```
-docker-compose -up -d [--force-recreate]
+docker-compose up -d [--force-recreate]
 docker-compose logs -f --tail="all" # logs
 ```
 
