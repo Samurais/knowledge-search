@@ -43,7 +43,7 @@ docker-compose logs -f --tail="all" # logs
 ## Test
 Open http://YOUR_IP:7474/browser/
 ```
-$ merge(p:Person{name:"hain", createAt:TIMESTAMP()})
+merge(p:Person{name:"hain", createAt:toString(TIMESTAMP())})
 ```
 
 Now, check elasticsearch-head(http://YOUR_IP:9100/), add index in kibana.
@@ -92,8 +92,8 @@ https://github.com/mobz/elasticsearch-head
 
 ### neo4j
 https://neo4j.com/developer/elastic-search/
+https://github.com/Samurais/graph-aided-search
 https://graphaware.com/neo4j/2016/04/20/graph-aided-search-the-rise-of-personalised-content.html
-
 
 ## Destroy
 ```
@@ -139,7 +139,8 @@ sudo service nginx reload
 [Elasticsearch Definitive Guide](./elasticsearch-definitive-guide-en.pdf)
 
 ## Trouble Shooting
-[Fielddata is disabled on text fields by default](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html)
+
+1. [Fielddata is disabled on text fields by default](https://www.elastic.co/guide/en/elasticsearch/reference/5.0/fielddata.html)
 ```
 PUT /chatbot/_mapping/messageinbound/ HTTP/1.1
 Host: elk-es.xxx.net
@@ -155,6 +156,29 @@ Authorization: Basic xxxxxxxxxxxxxxx
   }
 }
 ```
+
+2. Can not find timestamp field to create Kibana Index.
+
+> that is due to elasticsearch:index mappings are mapped to un-Date type.
+
+Set the date object with RESt API.
+```
+PUT /neo4j-index-node/_mapping/Person HTTP/1.1
+Host: YOUR_IP:9200
+Content-Type: application/json
+
+{
+	"properties":{
+        "createAt": {
+          "type": "date",
+          "format": "epoch_millis"
+        }
+      }
+}
+```
+
+Note, with neo4j-to-elasticsearch, use **merge(p:Person{name:"hain", createAt:toString(TIMESTAMP())})** .
+
 
 # LICENSE
 All Rights Reserve 2017, Hai Liang Wang.
